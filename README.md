@@ -22,7 +22,7 @@ total 2020
 -rw-rw-r-- 1 ddl ddl   10979 Dec  6 15:37 Prod_Steps.txt   <-- Sample steps for Production deployment  
 -rw-rw-r-- 1 ddl ddl  998838 Dec  6 14:55 Development.zip  <-- Archive for the Development environment. 
 -rw-rw-r-- 1 ddl ddl      41 Dec  6 14:55 README.md        <-- Instructions on how to deploy the solution.    
--rw-rw-r-- 1 ddl ddl 1001196 Dec  6 14:55 Production.zip   <-- Archive for the Development environment. 
+-rw-rw-r-- 1 ddl ddl 1001196 Dec  6 14:55 Production.zip   <-- Archive for the Production environment. 
 
 
 Upon unzipping the 2 archives, below contents will be presented.  
