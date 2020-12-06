@@ -1,0 +1,217 @@
+merrylee:Charts merrylee$ helm install prod-mysqldb ./prod-mysqldb
+NAME: prod-mysqldb
+LAST DEPLOYED: Sun Dec  6 15:15:54 2020
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+
+merrylee:Charts merrylee$ kubectl get all
+NAME                                READY   STATUS    RESTARTS   AGE
+pod/dev-mysqldb-ddff4c64f-qxwvz     1/1     Running   0          43m
+pod/dev-webapps-76f7567cb4-b48sr    1/1     Running   0          8m56s
+pod/dev-webapps-76f7567cb4-qxfm7    1/1     Running   0          8m56s
+pod/dev-webapps-76f7567cb4-ztbzm    1/1     Running   0          8m56s
+pod/prod-mysqldb-78596f5557-dhbvh   1/1     Running   0          25s
+
+NAME                      TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/dev-mysqldb       ClusterIP   10.104.191.68   <none>        3306/TCP       43m
+service/dev-webapps       ClusterIP   10.103.80.254   <none>        80/TCP         8m56s
+service/dev-webapps-ext   NodePort    10.106.67.208   <none>        80:30080/TCP   8m56s
+service/kubernetes        ClusterIP   10.96.0.1       <none>        443/TCP        4d16h
+service/prod-mysqldb      ClusterIP   10.104.46.100   <none>        3306/TCP       25s
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dev-mysqldb    1/1     1            1           43m
+deployment.apps/dev-webapps    3/3     3            3           8m56s
+deployment.apps/prod-mysqldb   1/1     1            1           25s
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/dev-mysqldb-ddff4c64f     1         1         1       43m
+replicaset.apps/dev-webapps-76f7567cb4    3         3         3       8m56s
+replicaset.apps/prod-mysqldb-78596f5557   1         1         1       25s
+
+
+merrylee:Charts merrylee$ kubectl logs prod-mysqldb-78596f5557-dhbvh
+[Entrypoint] MySQL Docker Image 8.0.22-1.1.18
+[Entrypoint] No password option specified for new database.
+[Entrypoint]   A random onetime password will be generated.
+[Entrypoint] Initializing database
+2020-12-06T07:16:02.765380Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.22) initializing of server in progress as process 22
+2020-12-06T07:16:02.772798Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2020-12-06T07:16:03.302046Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2020-12-06T07:16:04.817920Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+[Entrypoint] Database initialized
+2020-12-06T07:16:09.051920Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.22) starting as process 65
+2020-12-06T07:16:09.068649Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2020-12-06T07:16:09.649650Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2020-12-06T07:16:09.823206Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2020-12-06T07:16:09.991950Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2020-12-06T07:16:09.992207Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2020-12-06T07:16:10.028044Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.22'  socket: '/var/lib/mysql/mysql.sock'  port: 0  MySQL Community Server - GPL.
+Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+[Entrypoint] GENERATED ROOT PASSWORD: @xVanYztEveJjUn&OMucLOPs0Jy
+
+[Entrypoint] ignoring /docker-entrypoint-initdb.d/*
+
+2020-12-06T07:16:14.099209Z 10 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.22).
+2020-12-06T07:16:15.598820Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.22)  MySQL Community Server - GPL.
+[Entrypoint] Server shut down
+[Entrypoint] Setting root user as expired. Password will need to be changed before database can be used.
+
+[Entrypoint] MySQL init process done. Ready for start up.
+
+[Entrypoint] Starting MySQL 8.0.22-1.1.18
+2020-12-06T07:16:16.365915Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.22) starting as process 127
+2020-12-06T07:16:16.376545Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2020-12-06T07:16:16.582023Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2020-12-06T07:16:16.736182Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2020-12-06T07:16:16.807477Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2020-12-06T07:16:16.807961Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2020-12-06T07:16:16.845442Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.22'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Server - GPL.
+
+
+merrylee:Charts merrylee$ kubectl exec --stdin --tty prod-mysqldb-78596f5557-dhbvh  -- /bin/bash
+bash-4.2# mysql -h localhost -uroot -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.22
+
+Copyright (c) 2000, 2020, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY 'password';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> CREATE DATABASE messages;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use messages;
+Database changed
+mysql> CREATE TABLE messages(text VARCHAR(100));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SHOW TABLES;
++--------------------+
+| Tables_in_messages |
++--------------------+
+| messages           |
++--------------------+
+1 row in set (0.01 sec)
+
+mysql> INSERT INTO messages VALUES ('Hello World');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from messages;
++-------------+
+| text        |
++-------------+
+| Hello World |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> CREATE USER 'root'@'%'
+    ->   IDENTIFIED BY 'password';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT ALL
+    ->   ON *.*
+    ->   TO 'root'@'%'
+    ->   WITH GRANT OPTION;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql> ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql>
+mysql> CREATE USER 'mysqluser'@'%'
+    ->   IDENTIFIED BY 'password';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> GRANT ALL
+    ->   ON messages.*
+    ->   TO 'mysqluser'@'%'
+    ->   WITH GRANT OPTION;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>
+mysql>
+mysql> ALTER USER 'mysqluser'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql>
+
+mysql> exit
+Bye
+bash-4.2# exit
+exit
+
+
+merrylee:Charts merrylee$  helm install  prod-webapps ./prod-webapps
+NAME: prod-webapps
+LAST DEPLOYED: Sun Dec  6 15:22:41 2020
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+merrylee:Charts merrylee$ kubectl get all
+NAME                                READY   STATUS    RESTARTS   AGE
+pod/dev-mysqldb-ddff4c64f-qxwvz     1/1     Running   0          50m
+pod/dev-webapps-76f7567cb4-b48sr    1/1     Running   0          15m
+pod/dev-webapps-76f7567cb4-qxfm7    1/1     Running   0          15m
+pod/dev-webapps-76f7567cb4-ztbzm    1/1     Running   0          15m
+pod/prod-mysqldb-78596f5557-dhbvh   1/1     Running   0          7m11s
+pod/prod-webapps-58dcd59854-77q9r   1/1     Running   0          24s
+pod/prod-webapps-58dcd59854-qs9vf   1/1     Running   0          24s
+pod/prod-webapps-58dcd59854-rgzz4   1/1     Running   0          24s
+
+NAME                       TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/dev-mysqldb        ClusterIP   10.104.191.68   <none>        3306/TCP       50m
+service/dev-webapps        ClusterIP   10.103.80.254   <none>        80/TCP         15m
+service/dev-webapps-ext    NodePort    10.106.67.208   <none>        80:30080/TCP   15m
+service/kubernetes         ClusterIP   10.96.0.1       <none>        443/TCP        4d17h
+service/prod-mysqldb       ClusterIP   10.104.46.100   <none>        3306/TCP       7m11s
+service/prod-webapps       ClusterIP   10.104.143.48   <none>        80/TCP         24s
+service/prod-webapps-ext   NodePort    10.99.204.156   <none>        80:30081/TCP   24s
+
+NAME                           READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/dev-mysqldb    1/1     1            1           50m
+deployment.apps/dev-webapps    3/3     3            3           15m
+deployment.apps/prod-mysqldb   1/1     1            1           7m11s
+deployment.apps/prod-webapps   3/3     3            3           24s
+
+NAME                                      DESIRED   CURRENT   READY   AGE
+replicaset.apps/dev-mysqldb-ddff4c64f     1         1         1       50m
+replicaset.apps/dev-webapps-76f7567cb4    3         3         3       15m
+replicaset.apps/prod-mysqldb-78596f5557   1         1         1       7m11s
+replicaset.apps/prod-webapps-58dcd59854   3         3         3       24s
+merrylee:Charts merrylee$ minikube service prod-webapps-ext --url
+http://192.168.99.101:30081
+merrylee:Charts merrylee$ curl http://192.168.99.101:30081
+[{"text":"Hello World"}]merrylee:Charts merrylee$
+
+
+merrylee:Charts merrylee$ helm list
+NAME            NAMESPACE       REVISION        UPDATED                                 STATUS          CHART                   APP VERSION
+dev-mysqldb     default         1               2020-12-06 14:32:50.434728 +0800 +08    deployed        devmysqldb-0.1.0        1.0.0
+dev-webapps     default         1               2020-12-06 15:07:23.472132 +0800 +08    deployed        devwebapps-0.1.0        1.0.0
+prod-mysqldb    default         1               2020-12-06 15:15:54.809351 +0800 +08    deployed        prodmysqldb-0.1.0       1.0.0
+prod-webapps    default         1               2020-12-06 15:22:41.594203 +0800 +08    deployed        prodwebapps-0.1.0       1.0.0
